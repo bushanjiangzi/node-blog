@@ -1,0 +1,21 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "a blog",
+  "main": "bin/www.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=dev nodemon ./bin/www.js",
+    "pro": "cross-env NODE_ENV=prd nodemon ./bin/www.js"
+  },
+  "author": "jiangzi",
+  "email": "grjiangzi@163.com",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
