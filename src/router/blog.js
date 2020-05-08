@@ -19,7 +19,7 @@ const handleBlogRouter = (req, res) => {
     //     new ErrorModel('未登录！')
     //   )
     // }
-    // 通过session判断用户是否登录
+    // 通过session判断用户是否登录,
     if (!req.session.username) {
       return Promise.resolve(
         new ErrorModel('未登录！')

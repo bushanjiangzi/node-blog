@@ -24,7 +24,7 @@ const getDetail = (id) => {
   })
 }
 
-// 新建博客
+// 新建博客,
 const newBlog = (blogData = {}) => {
   const title = blogData.title
   const content = blogData.content

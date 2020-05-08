@@ -1,7 +1,7 @@
 const {login} = require('../controller/user')
 const {SuccessModel, ErrorModel} = require('../model/resModel')
 
-// 设置cookie的过期时间
+// 设置cookie的过期时间,
 const getCookieExpires = () => {
   const d = new Date()
   d.setTime(d.getTime() + 1000 * 3600 * 24)

@@ -2,7 +2,7 @@ const querystring = require('querystring')
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 
-// session 数据
+// session 数据,
 const SESSION_DATA = {}
 
 // 设置cookie的过期时间
