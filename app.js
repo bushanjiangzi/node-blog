@@ -1,6 +1,7 @@
 const querystring = require('querystring')
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
+const {redisSet, redisGet} = require('./src/db/redis')
 
 // session 数据,
 const SESSION_DATA = {}
@@ -59,22 +60,42 @@ const serverHandle = (req, res) => {
   });
   console.log('req.cookie', req.cookie)
 
-  // 解析session
+  // 解析session (开辟独立内存)
+  // let needSetCookie = false
+  // let userId = req.cookie.userId
+  // if (userId) {
+  //   if (!SESSION_DATA[userId]) {
+  //     SESSION_DATA[userId] = {}
+  //   }
+  // } else {
+  //   needSetCookie = true
+  //   userId = Date.now() + '_' + parseInt(Math.random() * 1000000)
+  //   SESSION_DATA[userId] = {}
+  // }
+  // req.session = SESSION_DATA[userId]
+
+  // 解析session (使用redis存储)
   let needSetCookie = false
   let userId = req.cookie.userId
-  if (userId) {
-    if (!SESSION_DATA[userId]) {
-      SESSION_DATA[userId] = {}
-    }
-  } else {
+  if (!userId) {
     needSetCookie = true
     userId = Date.now() + '_' + parseInt(Math.random() * 1000000)
-    SESSION_DATA[userId] = {}
+    redisSet(userId, {})
   }
-  req.session = SESSION_DATA[userId]
+  req.sessionId = userId
+  redisGet(req.sessionId).then(sessionData => {
+    if (sessionData === null) {
+      redisSet(req.sessionId, {})
+      req.session = {}
+    } else {
+      req.session = sessionData
+    }
+    console.log('req.session:', req.session)
 
-  // 处理post data
-  getPostData(req).then(postData => {
+    // 处理post data
+    return getPostData(req)
+  })
+  .then(postData => {
     req.body = postData
 
     // 处理blog路由
@@ -93,18 +114,20 @@ const serverHandle = (req, res) => {
 
     // 处理user路由
     const userRes = handleUserRouter(req, res)
-    return userRes.then(userData => {
-      if (userData) {
-        if (needSetCookie) {
-          res.setHeader('Set-Cookie', `userId=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
+    if (userRes) {
+      return userRes.then(userData => {
+        if (userData) {
+          if (needSetCookie) {
+            res.setHeader('Set-Cookie', `userId=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
+          }
+          res.end(
+            JSON.stringify(userData)
+          )
+          return
         }
-        res.end(
-          JSON.stringify(userData)
-        )
-        return
-      }
-    })
-
+      })
+    }
+    
     // 未找到路由
     res.writeHead(404, {'Content-type': 'text/plain'})
     res.write('404 Not Found!\n')

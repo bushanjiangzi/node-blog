@@ -7,6 +7,15 @@ const {
 } = require('../controller/blog')
 const {SuccessModel, ErrorModel} = require('../model/resModel')
 
+// 统一登录认证方法
+const loginCheck = (req) => {
+  if (!req.session.username) {
+    return Promise.resolve(
+      new ErrorModel('尚未登录！')
+    )
+  }
+}
+
 const handleBlogRouter = (req, res) => {
   const method = req.method // GET POST
   const id = req.query.id
@@ -20,10 +29,15 @@ const handleBlogRouter = (req, res) => {
     //   )
     // }
     // 通过session判断用户是否登录,
-    if (!req.session.username) {
-      return Promise.resolve(
-        new ErrorModel('未登录！')
-      )
+    // if (!req.session.username) {
+    //   return Promise.resolve(
+    //     new ErrorModel('未登录！')
+    //   )
+    // }
+    // 获取列表不需要登录
+    const loginResult = loginCheck(req)
+    if (loginResult) {
+      return loginResult
     }
     const author = req.query.author || ''
     const keyword = req.query.keyword || ''
@@ -48,7 +62,11 @@ const handleBlogRouter = (req, res) => {
   if (method === 'POST' && req.path === '/api/blog/new') {
     // const data = newBlog(req.body)
     // return new SuccessModel(data)
-    req.body.author = '赵六'
+    const loginResult = loginCheck(req)
+    if (loginResult) {
+      return loginResult
+    }
+    req.body.author = req.session.realName
     const res = newBlog(req.body)
     return res.then(data => {
       return new SuccessModel(data)
@@ -63,6 +81,10 @@ const handleBlogRouter = (req, res) => {
     // } else {
     //   return new ErrorModel('更新博客失败！')
     // }
+    const loginResult = loginCheck(req)
+    if (loginResult) {
+      return loginResult
+    }
     const res = updateBlog(id, req.body)
     return res.then(data => {
       if (data) {
@@ -75,7 +97,11 @@ const handleBlogRouter = (req, res) => {
 
   // 删除博客
   if (method === 'POST' && req.path === '/api/blog/delete') {
-    req.body.author = '赵六'
+    const loginResult = loginCheck(req)
+    if (loginResult) {
+      return loginResult
+    }
+    req.body.author = req.session.realName
     const res = deleteBlog(id, req.body.author)
     return res.then(data => {
       if (data) {
