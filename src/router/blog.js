@@ -66,7 +66,6 @@ const handleBlogRouter = (req, res) => {
     if (loginResult) {
       return loginResult
     }
-    req.body.author = req.session.realName
     const res = newBlog(req.body)
     return res.then(data => {
       return new SuccessModel(data)
@@ -85,7 +84,7 @@ const handleBlogRouter = (req, res) => {
     if (loginResult) {
       return loginResult
     }
-    const res = updateBlog(id, req.body)
+    const res = updateBlog(req.body)
     return res.then(data => {
       if (data) {
         return new SuccessModel('更新博客成功！')
@@ -101,8 +100,8 @@ const handleBlogRouter = (req, res) => {
     if (loginResult) {
       return loginResult
     }
-    req.body.author = req.session.realName
-    const res = deleteBlog(id, req.body.author)
+    req.body.author = req.session.realname
+    const res = deleteBlog(req.body)
     return res.then(data => {
       if (data) {
         return new SuccessModel('删除博客成功！')

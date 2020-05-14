@@ -21,7 +21,7 @@ const getPostData = function(req) {
       resolve({})
       return
     }
-    if (req.headers['content-type'] !== 'application/json') {
+    if (req.headers['content-type'].indexOf('application/json') < 0) {
       resolve({})
       return
     }
@@ -127,7 +127,7 @@ const serverHandle = (req, res) => {
         }
       })
     }
-    
+
     // 未找到路由
     res.writeHead(404, {'Content-type': 'text/plain'})
     res.write('404 Not Found!\n')

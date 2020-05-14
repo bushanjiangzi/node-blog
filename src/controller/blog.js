@@ -42,9 +42,10 @@ const newBlog = (blogData = {}) => {
 }
 
 // 更新博客
-const updateBlog = (id, blogData = {}) => {
+const updateBlog = (blogData = {}) => {
   const title = blogData.title
   const content = blogData.content
+  const id = blogData.id
   let sql = `update blogs set title='${title}', content='${content}' where id='${id}'`
   return exec(sql).then(res => {
     if (res.affectedRows > 0) {
@@ -55,7 +56,9 @@ const updateBlog = (id, blogData = {}) => {
 } 
 
 // 删除博客
-const deleteBlog = (id, author) => {
+const deleteBlog = (bodyData) => {
+  const author = bodyData.author
+  const id = bodyData.id
   const sql = `delete from blogs where id='${id}' and author='${author}'` 
   return exec(sql).then(res => {
     if (res.affectedRows > 0) {

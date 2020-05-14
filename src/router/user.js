@@ -28,7 +28,7 @@ const handleUserRouter = (req, res) => {
 
         // 设置session(使用redis同步)
         redisSet(req.sessionId, {username: data.username, realname: data.realname})
-        return new SuccessModel('登录成功')
+        return new SuccessModel(data, '登录成功')
       } else {
         return new ErrorModel('登录失败')
       }
