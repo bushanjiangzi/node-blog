@@ -1,0 +1,23 @@
+2020-05-24 17:52:22: 模拟出错.....
+2020-05-24 17:52:33: 模拟出错.....
+2020-05-24 17:52:33: Error: 访问'err'路由出错了。。。。
+2020-05-24 17:52:33:     at Server.http.createServer (D:\feCode\node-blog\test\pm2\app.js:8:11)
+2020-05-24 17:52:33:     at Server.emit (events.js:198:13)
+2020-05-24 17:52:33:     at Server.<anonymous> (C:\Users\jiangzi\AppData\Roaming\npm\node_modules\pm2\node_modules\_@pm2_io@4.3.5@@pm2\io\build\main\metrics\httpMetrics.js:166:33)
+2020-05-24 17:52:33:     at parserOnIncoming (_http_server.js:677:12)
+2020-05-24 17:52:33:     at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+2020-05-24 17:52:33: 模拟出错.....
+2020-05-24 17:52:33: Error: 访问'err'路由出错了。。。。
+2020-05-24 17:52:33:     at Server.http.createServer (D:\feCode\node-blog\test\pm2\app.js:8:11)
+2020-05-24 17:52:33:     at Server.emit (events.js:198:13)
+2020-05-24 17:52:33:     at Server.<anonymous> (C:\Users\jiangzi\AppData\Roaming\npm\node_modules\pm2\node_modules\_@pm2_io@4.3.5@@pm2\io\build\main\metrics\httpMetrics.js:166:33)
+2020-05-24 17:52:33:     at parserOnIncoming (_http_server.js:677:12)
+2020-05-24 17:52:33:     at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+2020-05-24 17:52:34: 模拟出错.....
+2020-05-24 17:52:34: Error: 访问'err'路由出错了。。。。
+2020-05-24 17:52:34:     at Server.http.createServer (D:\feCode\node-blog\test\pm2\app.js:8:11)
+2020-05-24 17:52:34:     at Server.emit (events.js:198:13)
+2020-05-24 17:52:34:     at Server.<anonymous> (C:\Users\jiangzi\AppData\Roaming\npm\node_modules\pm2\node_modules\_@pm2_io@4.3.5@@pm2\io\build\main\metrics\httpMetrics.js:166:33)
+2020-05-24 17:52:34:     at parserOnIncoming (_http_server.js:677:12)
+2020-05-24 17:52:34:     at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+2020-05-24 17:52:37: 模拟出错.....
